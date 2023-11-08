@@ -1,0 +1,42 @@
+{
+  "name": "tools-for-running",
+  "version": "0.1.0",
+  "description": "Tools for running. Convert speed into pace, convert miles to kilometers, etc.",
+  "author": "nathan-lbt",
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "keywords": [
+    "running",
+    "runner",
+    "tools",
+    "conversions",
+    "speed",
+    "distances",
+    "pace"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.lib.json",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "testRegex": "^.+\\.spec\\.ts$"
+  },
+  "files": [
+    "lib"
+  ],
+  "devDependencies": {
+    "@types/jest": "^29.5.7",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.2"
+  }
+}

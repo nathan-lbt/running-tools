@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "removeComments": false
+  },
+  "exclude": ["src/**/__test__/**/*"]
+}

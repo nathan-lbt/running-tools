@@ -1,0 +1,5 @@
+# Build files
+lib
+
+# Node modules
+node_modules
