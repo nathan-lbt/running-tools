@@ -1,12 +1,5 @@
 import { MINUTES_IN_HOUR, SECONDS_IN_MINUTE } from "../consts";
-
-/**
- * Describes a pace.
- */
-export interface Pace {
-  minutes: number;
-  seconds: number;
-}
+import { Pace } from "../types";
 
 /**
  * Convert a speed to pace. See the speed param for unit description.

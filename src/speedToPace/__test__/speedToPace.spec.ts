@@ -8,13 +8,15 @@ describe("speedToPace", () => {
     expect(pace?.seconds).toBe(27);
   });
 
-  it("returns null if speed equals 0", () => {
-    const pace = speedToPace(0);
-    expect(pace).toBe(null);
-  });
+  describe("returns null", () => {
+    it("if speed equals 0", () => {
+      const pace = speedToPace(0);
+      expect(pace).toBe(null);
+    });
 
-  it("returns null if speed is negative", () => {
-    const pace = speedToPace(-11);
-    expect(pace).toBe(null);
+    it("if speed is negative", () => {
+      const pace = speedToPace(-11);
+      expect(pace).toBe(null);
+    });
   });
 });
