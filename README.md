@@ -1,14 +1,51 @@
 # Running Tools
 
-## Description
+## Features
 
-Tools For Running provides several typed functions that will help you convert a speed into pace, convert miles to kilometers, etc.
+Running Tools provides several typed functions that can be useful for running.
 
-### Installation
+### Conversions
 
-npm install tools-for-running
+#### Distance
 
-### Contributors
+Running Tools provides the following distance conversions:
+
+- meters to kilometers
+- meters to miles
+- kilometers to meters
+- kilometers to miles
+- miles to kilometers
+- miles to meters
+
+#### Speed to pace
+
+Running Tools provides a speed to pace converter.
+
+#### Pace to speed
+
+Running Tools provides a pace to speed converter.
+
+#### Maximum heart rate
+
+Running Tools provides three different functions to calculate maximum heart rate:
+
+- Gellish and Al. formula
+- Gellish and Coll. formula
+- Haskell and Fox formula.
+
+#### Heart rate zones
+
+Running tools provides two functions to calculate heart rate zones:
+
+- Karvonen method
+- Maximum heart rate method
+  Zone ranges are the following for the two functions: [50%-60%], [60%-70%], [70%-80%], [80%-90%], [90%-100%].
+
+## Installation
+
+npm install running-tools
+
+## Contributors
 
 Contributors are more than welcomed.
 

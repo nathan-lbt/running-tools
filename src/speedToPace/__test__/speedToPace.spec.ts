@@ -10,13 +10,11 @@ describe("speedToPace", () => {
 
   describe("returns null", () => {
     it("if speed equals 0", () => {
-      const pace = speedToPace(0);
-      expect(pace).toBe(null);
+      expect(speedToPace(0)).toBe(null);
     });
 
     it("if speed is negative", () => {
-      const pace = speedToPace(-11);
-      expect(pace).toBe(null);
+      expect(speedToPace(-11)).toBe(null);
     });
   });
 });
