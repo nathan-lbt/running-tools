@@ -1,5 +1,11 @@
 # Running Tools
 
+## Installation
+
+```
+npm install running-tools
+```
+
 ## Features
 
 Running Tools provides several typed functions that can be useful for running.
@@ -16,6 +22,10 @@ Running Tools provides the following distance conversions:
 - kilometers to miles
 - miles to kilometers
 - miles to meters
+
+#### Elevation
+
+Running Tools provides a function to calculate a slope and a function to calculate an elevation.
 
 #### Speed to pace
 
@@ -41,14 +51,10 @@ Running tools provides two functions to calculate heart rate zones:
 - Maximum heart rate method
   Zone ranges are the following for the two functions: [50%-60%], [60%-70%], [70%-80%], [80%-90%], [90%-100%].
 
-## Installation
-
-npm install running-tools
-
 ## Contributors
 
 Contributors are more than welcomed.
 
-# License
+## License
 
 MIT License.
