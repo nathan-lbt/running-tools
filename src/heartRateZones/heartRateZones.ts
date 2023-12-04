@@ -28,10 +28,10 @@ const zonesRange: HeartRateZoneRange[] = [
 
 /**
  * Calculates a limit heart rate using the maximum heart rate, resting heart rate, and percentage.
- * @param maxHeartRate The maximum heart rate.
- * @param restingHeartRate The resting heart rate.
- * @param percentage The percentage of the heart rate range.
- * @returns The limit heart rate.
+ * @param maxHeartRate - The maximum heart rate.
+ * @param restingHeartRate - The resting heart rate.
+ * @param percentage - The percentage of the heart rate range.
+ * @returns - The limit heart rate.
  */
 const calculateLimitHeartRate = (
   maxHeartRate: number,
@@ -45,10 +45,10 @@ const calculateLimitHeartRate = (
 
 /**
  * Calculates the heart rate zone using the maximum heart rate and resting heart rate.
- * @param maxHeartRate The maximum heart rate.
- * @param restingHeartRate The resting heart rate.
- * @param zoneRange The heart rate zone range.
- * @returns The heart rate zone.
+ * @param maxHeartRate - The maximum heart rate.
+ * @param restingHeartRate - The resting heart rate.
+ * @param zoneRange - The heart rate zone range.
+ * @returns - The heart rate zone.
  */
 const calculateHeartRateZoneUsingKarvonen = (
   maxHeartRate: number,
@@ -72,9 +72,9 @@ const calculateHeartRateZoneUsingKarvonen = (
 
 /**
  * Calculates the heart rate zones based on the maximum heart rate and resting heart rate.
- * @param maxHeartRate The maximum heart rate.
- * @param restingHeartRate The resting heart rate.
- * @returns The heart rate zones or null if maxHeartRate is not greater than restingHeartRate or if either value is not positive.
+ * @param maxHeartRate - The maximum heart rate.
+ * @param restingHeartRate - The resting heart rate.
+ * @returns - The heart rate zones or null if maxHeartRate is not greater than restingHeartRate or if either value is not positive.
  */
 export const calculateHeartRateZonesUsingKarvonen = (
   maxHeartRate: number,
@@ -99,9 +99,9 @@ export const calculateHeartRateZonesUsingKarvonen = (
 
 /**
  * Calculates the heart rate zone using the maximum heart rate.
- * @param maxHeartRate The maximum heart rate.
- * @param zoneRange The heart rate zone range.
- * @returns The heart rate zone.
+ * @param maxHeartRate - The maximum heart rate.
+ * @param zoneRange - The heart rate zone range.
+ * @returns - The heart rate zone.
  */
 const calculateHeartRateZoneUsingMax = (
   maxHeartRate: number,
@@ -116,8 +116,8 @@ const calculateHeartRateZoneUsingMax = (
 
 /**
  * Calculates the heart rate zones based on the maximum heart rate.
- * @param maxHeartRate The maximum heart rate.
- * @returns The heart rate zones or null if maxHeartRate is not positive.
+ * @param maxHeartRate - The maximum heart rate.
+ * @returns - The heart rate zones or null if maxHeartRate is not positive.
  */
 export const calculateHeartRateZonesUsingMax = (
   maxHeartRate: number

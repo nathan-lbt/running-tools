@@ -24,7 +24,7 @@ const validatePace = (pace: Pace): boolean => {
  * If the unit of the provided pace is minutes, seconds per mile, the result will be in miles per hour.
  * If the unit of the provided pace is minutes, seconds per kilometer, the result will be in kilometers per hour.
  * @param fractionDigits - Number of digits after the decimal point. Must be in the range 0 - 20, inclusive.
- * @returns The corresponding speed (number).
+ * @returns The corresponding speed (number) or null if the pace is invalid (if minutes or seconds is less than or equal to 0).
  */
 export const paceToSpeed = (
   pace: Pace,

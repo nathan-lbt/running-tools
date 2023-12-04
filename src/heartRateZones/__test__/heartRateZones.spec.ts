@@ -60,6 +60,44 @@ describe("calculateHeartRateZones", () => {
   });
 });
 
+const x = [
+  {
+    index: 1,
+    minPercentage: 0.5,
+    maxPercentage: 0.6,
+    minHeartRate: 120,
+    maxHeartRate: 132,
+  },
+  {
+    index: 2,
+    minPercentage: 0.6,
+    maxPercentage: 0.7,
+    minHeartRate: 132,
+    maxHeartRate: 144,
+  },
+  {
+    index: 3,
+    minPercentage: 0.7,
+    maxPercentage: 0.8,
+    minHeartRate: 144,
+    maxHeartRate: 156,
+  },
+  {
+    index: 4,
+    minPercentage: 0.8,
+    maxPercentage: 0.9,
+    minHeartRate: 156,
+    maxHeartRate: 168,
+  },
+  {
+    index: 5,
+    minPercentage: 0.9,
+    maxPercentage: 1,
+    minHeartRate: 168,
+    maxHeartRate: 180,
+  },
+];
+
 describe("calculateHeartRateZonesUsingMax", () => {
   it("should return an array of 5 heart rate zones", () => {
     const maxHeartRate = 180;

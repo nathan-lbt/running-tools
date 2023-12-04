@@ -6,7 +6,7 @@ import { Pace } from "../types";
  * @param speed - The speed to convert (number).
  * If the unit of the provided speed is miles per hour, the result will be in minutes, seconds per mile.
  * If the unit of the provided speed is kilometers per hour, the result will be in minutes, seconds per kilometer.
- * @returns The corresponding pace (Pace).
+ * @returns The corresponding pace (Pace) or null if the speed is less than or equal to 0.
  */
 export const speedToPace = (speed: number): Pace | null => {
   if (speed <= 0) return null;
