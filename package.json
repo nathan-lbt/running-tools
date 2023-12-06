@@ -1,6 +1,6 @@
 {
   "name": "running-tools",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Tools for running. Convert speed into pace, convert miles to kilometers, etc.",
   "repository": "https://github.com/nathan-lbt/running-tools",
   "author": "nathan-lbt",
@@ -14,7 +14,8 @@
     "conversions",
     "speed",
     "distances",
-    "pace"
+    "pace",
+    "elevation"
   ],
   "scripts": {
     "build": "tsc --project tsconfig.lib.json",

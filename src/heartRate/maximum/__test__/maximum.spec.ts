@@ -2,7 +2,7 @@ import {
   maxHeartRateGellishAl,
   maxHeartRateHaskellFox,
   maxHeartRateGellishColl,
-} from "../maxHR";
+} from "../maximum";
 
 describe("Max Heart Rate Calculations", () => {
   describe("maxHeartRateGellishAl", () => {

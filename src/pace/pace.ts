@@ -1,4 +1,8 @@
-import { SECONDS_IN_HOUR, SECONDS_IN_MINUTE } from "../consts";
+import {
+  KILOMETERS_IN_MILE,
+  SECONDS_IN_HOUR,
+  SECONDS_IN_MINUTE,
+} from "../consts";
 import { Pace } from "../types";
 
 const defaultFractionDigits = 2;
@@ -46,4 +50,56 @@ export const paceToSpeed = (
         : defaultFractionDigits
     )
   );
+};
+
+/**
+ * Converts a pace from minutes per kilometer to minutes per mile.
+ * @param pace - The pace to convert (Pace).
+ * @returns The converted pace in minutes per mile (Pace) or null if the pace is invalid.
+ */
+export const minutesPerKilometerToMinutesPerMile = (
+  pace: Pace
+): Pace | null => {
+  const { minutes, seconds } = pace;
+
+  if (!validatePace({ minutes, seconds })) {
+    return null;
+  }
+
+  const secondsPerMile =
+    (minutes * SECONDS_IN_MINUTE + seconds) * KILOMETERS_IN_MILE;
+  const minutesPerMile = secondsPerMile / SECONDS_IN_MINUTE;
+
+  const convertedMinutes = Math.floor(minutesPerMile);
+  const convertedSeconds = Math.floor(
+    (minutesPerMile - convertedMinutes) * SECONDS_IN_MINUTE
+  );
+
+  return { minutes: convertedMinutes, seconds: convertedSeconds };
+};
+
+/**
+ * Converts a pace from minutes per mile to minutes per kilometer.
+ * @param pace - The pace to convert (Pace).
+ * @returns The converted pace in minutes per kilometer (Pace) or null if the pace is invalid.
+ */
+export const minutesPerMileToMinutesPerKilometer = (
+  pace: Pace
+): Pace | null => {
+  const { minutes, seconds } = pace;
+
+  if (!validatePace({ minutes, seconds })) {
+    return null;
+  }
+
+  const secondsPerMile =
+    (minutes * SECONDS_IN_MINUTE + seconds) / KILOMETERS_IN_MILE;
+  const minutesPerKilometer = secondsPerMile / SECONDS_IN_MINUTE;
+
+  const convertedMinutes = Math.floor(minutesPerKilometer);
+  const convertedSeconds = Math.floor(
+    (minutesPerKilometer - convertedMinutes) * SECONDS_IN_MINUTE
+  );
+
+  return { minutes: convertedMinutes, seconds: convertedSeconds };
 };

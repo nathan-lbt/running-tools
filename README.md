@@ -8,11 +8,17 @@ npm install running-tools
 
 ## Features
 
+- [Distance](#distance)
+- [Elevation](#elevation)
+- [Speed](#speed)
+- [Pace](#pace)
+- [Heart rate](#heart-rate)
+
 Running Tools provides several typed functions that can be useful for running.
 
 ### Distance
 
-Running Tools provides the following distance conversions:
+Running Tools provides several distance converters:
 
 ```typescript
 import {
@@ -23,7 +29,11 @@ import {
   milesToKilometers,
   milesToMeters,
 } from "running-tools";
+```
 
+<details>
+
+```typescript
 /**
  * Convert meters to kilometers.
  * @param meters - The meter distance to convert (number).
@@ -64,13 +74,19 @@ milesToKilometers(1); // Result: 1.609344
 milesToMeters(1); // Result: 1609.344
 ```
 
+</details>
+
 ### Elevation
 
 Running Tools provides a function to calculate a slope and a function to calculate an elevation:
 
 ```typescript
 import { calculateElevation, calculateSlope } from "running-tools";
+```
 
+<details>
+
+```typescript
 /**
  * Calculates the elevation given the distance and slope.
  * @param distance - The distance traveled.
@@ -89,9 +105,25 @@ calculateElevation(100, -10); // Result: -10
 calculateSlope(100, 50); // Result: 50
 ```
 
-### Speed to pace
+</details>
 
-Running Tools provides a speed to pace converter:
+### Speed
+
+Running Tools provides a speed to pace converter and speed converters:
+
+```typescript
+import {
+  speedToPace,
+  metersPerSecondToKilometersPerHour,
+  metersPerSecondToMilesPerHour,
+  kilometersPerHourToMilesPerHour,
+  kilometersPerHourToMetersPerSecond,
+  milesPerHourToKilometersPerHour,
+  milesPerHourToMetersPerSecond,
+} from "running-tools";
+```
+
+<details>
 
 ```typescript
 /**
@@ -102,11 +134,65 @@ Running Tools provides a speed to pace converter:
  * @returns The corresponding pace (Pace) or null if the speed is less than or equal to 0.
  */
 speedToPace(11); // Result: {minutes: 5, seconds: 27}
+
+/**
+ * Convert speed from meters per second to kilometers per hour.
+ * @param speed - The speed in meters per second.
+ * @returns The speed in kilometers per hour.
+ */
+metersPerSecondToKilometersPerHour(11); // Result: 39.6
+
+/**
+ * Convert speed from meters per second to miles per hour.
+ * @param speed - The speed in meters per second.
+ * @returns The speed in miles per hour.
+ */
+metersPerSecondToMilesPerHour(11); // Result: ~24.6063
+
+/**
+ * Convert speed from kilometers per hour to miles per hour.
+ * @param speed - The speed in kilometers per hour.
+ * @returns The speed in miles per hour.
+ */
+kilometersPerHourToMilesPerHour(11); // Result: ~6.8351
+
+/**
+ * Convert speed from kilometers per hour to meters per second.
+ * @param speed - The speed in kilometers per hour.
+ * @returns The speed in meters per second.
+ */
+kilometersPerHourToMetersPerSecond(11); // Result: ~3.0556
+
+/**
+ * Convert speed from miles per hour to kilometers per hour.
+ * @param speed - The speed in miles per hour.
+ * @returns The speed in kilometers per hour.
+ */
+milesPerHourToKilometersPerHour(11); // Result: ~17.7028
+
+/**
+ * Convert speed from miles per hour to meters per second.
+ * @param speed - The speed in miles per hour.
+ * @returns The speed in meters per second.
+ */
+milesPerHourToMetersPerSecond(11); // Result: ~4.9174
 ```
 
-### Pace to speed
+</details>
+
+### Pace
 
 Running Tools provides a pace to speed converter.
+
+```typescript
+import {
+  minutesPerKilometerToMinutesPerMile,
+  minutesPerMileToMinutesPerKilometer,
+  paceToSpeed,
+} from "../pace";
+```
+
+<details>
 
 ```typescript
 /**
@@ -119,11 +205,39 @@ Running Tools provides a pace to speed converter.
  */
 paceToSpeed({ minutes: 4, seconds: 25 }); // Result: 13.58
 paceToSpeed({ minutes: 4, seconds: 25 }, 1); // Result: 13.6
+
+/**
+ * Converts a pace from minutes per kilometer to minutes per mile.
+ * @param pace - The pace to convert (Pace).
+ * @returns The converted pace in minutes per mile (Pace) or null if the pace is invalid.
+ */
+minutesPerKilometerToMinutesPerMile({ minutes: 4, seconds: 15 }); //Result: { minutes: 6, seconds: 50 }
+
+/**
+ * Converts a pace from minutes per mile to minutes per kilometer.
+ * @param pace - The pace to convert (Pace).
+ * @returns The converted pace in minutes per kilometer (Pace) or null if the pace is invalid.
+ */
+minutesPerMileToMinutesPerKilometer({ minutes: 5, seconds: 18 }); // Result: { minutes: 3, seconds: 17 })
 ```
 
-### Maximum heart rate
+</details>
+
+### Heart rate
+
+#### Maximum heart rate
 
 Running Tools provides three different functions to calculate maximum heart rate:
+
+```typescript
+import {
+  maxHeartRateGellishAl,
+  maxHeartRateGellishColl,
+  maxHeartRateHaskellFox,
+} from "running-tools";
+```
+
+<details>
 
 ```typescript
 /**
@@ -148,10 +262,21 @@ maxHeartRateHaskellFox(20); // Result: 200
 maxHeartRateGellishColl(20); // Result: 189.2
 ```
 
-### Heart rate zones
+</details>
 
-Running tools provides two functions to calculate heart rate zones.
+#### Heart rate zones
+
+Running tools provides two functions to calculate heart rate zones: one using the Karvonen method and the other using maximum heart rate only.
 Zone ranges are the following for the two functions: [50%-60%], [60%-70%], [70%-80%], [80%-90%], [90%-100%].
+
+```typescript
+import {
+  calculateHeartRateZonesUsingKarvonen,
+  calculateHeartRateZonesUsingMax,
+} from "running-tools";
+```
+
+<details>
 
 ```typescript
 /**
@@ -244,9 +369,12 @@ calculateHeartRateZonesUsingMax(180);
 ];
 ```
 
+</details>
+
 ## Contributors
 
 Contributors are more than welcomed.
+Also feel free to ask for more features on the GitHub repository.
 
 ## License
 
