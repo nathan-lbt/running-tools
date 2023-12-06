@@ -1,7 +1,7 @@
 import {
   calculateHeartRateZonesUsingKarvonen,
   calculateHeartRateZonesUsingMax,
-} from "../heartRateZones";
+} from "../zones";
 
 describe("calculateHeartRateZones", () => {
   it("should return an array of 5 heart rate zones", () => {

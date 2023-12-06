@@ -10,7 +10,7 @@ import {
   metersToMiles,
   milesToKilometers,
   milesToMeters,
-} from "../conversions";
+} from "../distance";
 
 describe("distance conversions", () => {
   it("converts meters to kilometers", () => {
