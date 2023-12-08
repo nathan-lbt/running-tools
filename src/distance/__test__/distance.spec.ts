@@ -3,7 +3,10 @@ import {
   METERS_IN_MILE,
   KILOMETERS_IN_MILE,
 } from "../../consts";
+import { DistanceUnit } from "../../types";
 import {
+  convertDistance,
+  distanceToMeters,
   kilometersToMeters,
   kilometersToMiles,
   metersToKilometers,
@@ -12,25 +15,119 @@ import {
   milesToMeters,
 } from "../distance";
 
-describe("distance conversions", () => {
-  it("converts meters to kilometers", () => {
-    expect(metersToKilometers(METERS_IN_KILOMETER)).toEqual(1);
+describe("Distance converters", () => {
+  describe("converts meters to kilometers", () => {
+    it("returns correct value", () => {
+      expect(metersToKilometers(METERS_IN_KILOMETER)).toEqual(1);
+    });
   });
-  it("converts meters to miles", () => {
-    expect(metersToMiles(METERS_IN_MILE)).toEqual(1);
-  });
-
-  it("converts a kilometer distance to miles", () => {
-    expect(kilometersToMiles(KILOMETERS_IN_MILE)).toEqual(1);
-  });
-  it("converts a kilometer distance to meters", () => {
-    expect(kilometersToMeters(1)).toEqual(METERS_IN_KILOMETER);
+  describe("converts meters to miles", () => {
+    it("returns correct value", () => {
+      expect(metersToMiles(METERS_IN_MILE)).toEqual(1);
+    });
   });
 
-  it("converts a mile distance to kilometers", () => {
-    expect(milesToKilometers(1)).toEqual(KILOMETERS_IN_MILE);
+  describe("converts a kilometer distance to miles", () => {
+    it("returns correct value", () => {
+      expect(kilometersToMiles(KILOMETERS_IN_MILE)).toEqual(1);
+    });
   });
-  it("converts a mile distance to meters", () => {
-    expect(milesToMeters(1)).toEqual(METERS_IN_MILE);
+  describe("converts a kilometer distance to meters", () => {
+    it("returns correct value", () => {
+      expect(kilometersToMeters(1)).toEqual(METERS_IN_KILOMETER);
+    });
+  });
+
+  describe("converts a mile distance to kilometers", () => {
+    it("returns correct value", () => {
+      expect(milesToKilometers(1)).toEqual(KILOMETERS_IN_MILE);
+    });
+  });
+  describe("converts a mile distance to meters", () => {
+    it("returns correct value", () => {
+      expect(milesToMeters(1)).toEqual(METERS_IN_MILE);
+    });
+  });
+
+  describe("distanceToMeters", () => {
+    it("returns correct value for kilometers", () => {
+      expect(distanceToMeters(1, DistanceUnit.Kilometers)).toEqual(
+        METERS_IN_KILOMETER
+      );
+    });
+
+    it("returns correct value for miles", () => {
+      expect(distanceToMeters(1, DistanceUnit.Miles)).toEqual(METERS_IN_MILE);
+    });
+
+    it("returns correct value for meters", () => {
+      expect(distanceToMeters(1, DistanceUnit.Meters)).toEqual(1);
+    });
+
+    it("throws error for unknown unit", () => {
+      expect(() => distanceToMeters(1, "unknown" as DistanceUnit)).toThrow();
+    });
+  });
+
+  describe("convertDistance", () => {
+    it('converts distance from "Meters" to "Kilometers"', () => {
+      expect(
+        convertDistance(1000, DistanceUnit.Meters, DistanceUnit.Kilometers)
+      ).toBe(1);
+    });
+
+    it('converts distance from "Meters" to "Miles"', () => {
+      const convertedDistance = convertDistance(
+        1000,
+        DistanceUnit.Meters,
+        DistanceUnit.Miles
+      ).toFixed(4);
+      expect(Number(convertedDistance)).toBe(0.6214);
+    });
+
+    it('converts distance from "Kilometers" to "Meters"', () => {
+      expect(
+        convertDistance(1, DistanceUnit.Kilometers, DistanceUnit.Meters)
+      ).toBe(1000);
+    });
+
+    it('converts distance from "Kilometers" to "Miles"', () => {
+      const convertedDistance = convertDistance(
+        1,
+        DistanceUnit.Kilometers,
+        DistanceUnit.Miles
+      ).toFixed(4);
+      expect(Number(convertedDistance)).toBe(0.6214);
+    });
+
+    it('converts distance from "Miles" to "Meters"', () => {
+      const convertedDistance = convertDistance(
+        1,
+        DistanceUnit.Miles,
+        DistanceUnit.Meters
+      );
+      expect(convertedDistance).toBe(1609.344);
+    });
+
+    it('converts distance from "Miles" to "Kilometers"', () => {
+      const convertedDistance = convertDistance(
+        1,
+        DistanceUnit.Miles,
+        DistanceUnit.Kilometers
+      ).toFixed(4);
+      expect(Number(convertedDistance)).toBe(1.6093);
+    });
+
+    it("throws an error if the distance unit is not supported", () => {
+      expect(() => {
+        convertDistance(1, "unsupported" as DistanceUnit, DistanceUnit.Meters);
+      }).toThrow();
+    });
+
+    it('throws an error if the "to" distance unit is not supported', () => {
+      expect(() => {
+        convertDistance(1, DistanceUnit.Meters, "unsupported" as DistanceUnit);
+      }).toThrow();
+    });
   });
 });

@@ -6,7 +6,7 @@ import {
   SECONDS_IN_HOUR,
   SECONDS_IN_MINUTE,
 } from "../consts";
-import { Pace } from "../types";
+import { Pace, SpeedUnit } from "../types";
 
 /**
  * Convert a speed to pace.
@@ -80,4 +80,53 @@ export const milesPerHourToKilometersPerHour = (speed: number): number => {
  */
 export const milesPerHourToMetersPerSecond = (speed: number): number => {
   return (speed * METERS_IN_MILE) / SECONDS_IN_HOUR;
+};
+
+/**
+ * Converts the given speed to meters per second.
+ * @param speed - The speed value to convert.
+ * @param unit - The unit of the speed value.
+ * @returns The converted speed in meters per second.
+ * @throws Error if the speed unit is unknown.
+ */
+export const speedToMetersPerSecond = (
+  speed: number,
+  unit: SpeedUnit
+): number => {
+  switch (unit) {
+    case SpeedUnit.MetersPerSecond:
+      return speed;
+    case SpeedUnit.KilometersPerHour:
+      return kilometersPerHourToMetersPerSecond(speed);
+    case SpeedUnit.MilesPerHour:
+      return milesPerHourToMetersPerSecond(speed);
+    default:
+      throw new Error(`Unknown speed unit: ${unit}`);
+  }
+};
+
+/**
+ * Converts the given speed to the specified unit.
+ * @param speed - The speed value to convert.
+ * @param unit - The unit of the speed value.
+ * @param toUnit - The unit to convert the speed to.
+ * @returns The converted speed in the specified unit.
+ * @throws Error if the speed unit or the target unit is unknown.
+ */
+export const convertSpeed = (
+  speed: number,
+  unit: SpeedUnit,
+  toUnit: SpeedUnit
+) => {
+  const metersPerSecond = speedToMetersPerSecond(speed, unit);
+  switch (toUnit) {
+    case SpeedUnit.MetersPerSecond:
+      return metersPerSecond;
+    case SpeedUnit.KilometersPerHour:
+      return metersPerSecondToKilometersPerHour(metersPerSecond);
+    case SpeedUnit.MilesPerHour:
+      return metersPerSecondToMilesPerHour(metersPerSecond);
+    default:
+      throw new Error(`Unknown speed unit: ${toUnit}`);
+  }
 };

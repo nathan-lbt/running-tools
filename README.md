@@ -10,9 +10,10 @@ npm install running-tools
 
 - [Distance](#distance)
 - [Elevation](#elevation)
-- [Speed](#speed)
-- [Pace](#pace)
 - [Heart rate](#heart-rate)
+- [Pace](#pace)
+- [Speed](#speed)
+- [Time](#time)
 
 Running Tools provides several typed functions that can be useful for running.
 
@@ -22,6 +23,7 @@ Running Tools provides several distance converters:
 
 ```typescript
 import {
+  distanceToMeters,
   metersToKilometers,
   metersToMiles,
   kilometersToMiles,
@@ -72,6 +74,25 @@ milesToKilometers(1); // Result: 1.609344
  * @returns The corresponding distance in meters (number).
  */
 milesToMeters(1); // Result: 1609.344
+
+/**
+ * Convert a distance to meters based on the specified unit.
+ * @param distance - The distance to convert (number).
+ * @param unit - The unit of the distance (DistanceUnit).
+ * @returns The corresponding distance in meters (number).
+ * @throws Error if the unit is unknown.
+ */
+distanceToMeters(1, "km"); // Result: 1000
+
+/**
+ * Convert a distance to a different unit.
+ * @param distance - The distance to convert (number).
+ * @param unit - The unit of the distance (DistanceUnit).
+ * @param toUnit - The unit to convert to (DistanceUnit).
+ * @returns The corresponding distance in the new unit (number).
+ * @throws Error if the unit or toUnit is unknown.
+ */
+convertDistance(1, "km", "m"); // Result: 1000
 ```
 
 </details>
@@ -103,122 +124,6 @@ calculateElevation(100, -10); // Result: -10
  * @returns The slope as a percentage, or null if the distance is less than or equal to 0.
  */
 calculateSlope(100, 50); // Result: 50
-```
-
-</details>
-
-### Speed
-
-Running Tools provides a speed to pace converter and speed converters:
-
-```typescript
-import {
-  speedToPace,
-  metersPerSecondToKilometersPerHour,
-  metersPerSecondToMilesPerHour,
-  kilometersPerHourToMilesPerHour,
-  kilometersPerHourToMetersPerSecond,
-  milesPerHourToKilometersPerHour,
-  milesPerHourToMetersPerSecond,
-} from "running-tools";
-```
-
-<details>
-
-```typescript
-/**
- * Convert a speed to pace. See the speed param for unit description.
- * @param speed - The speed to convert (number).
- * If the unit of the provided speed is miles per hour, the result will be in minutes, seconds per mile.
- * If the unit of the provided speed is kilometers per hour, the result will be in minutes, seconds per kilometer.
- * @returns The corresponding pace (Pace) or null if the speed is less than or equal to 0.
- */
-speedToPace(11); // Result: {minutes: 5, seconds: 27}
-
-/**
- * Convert speed from meters per second to kilometers per hour.
- * @param speed - The speed in meters per second.
- * @returns The speed in kilometers per hour.
- */
-metersPerSecondToKilometersPerHour(11); // Result: 39.6
-
-/**
- * Convert speed from meters per second to miles per hour.
- * @param speed - The speed in meters per second.
- * @returns The speed in miles per hour.
- */
-metersPerSecondToMilesPerHour(11); // Result: ~24.6063
-
-/**
- * Convert speed from kilometers per hour to miles per hour.
- * @param speed - The speed in kilometers per hour.
- * @returns The speed in miles per hour.
- */
-kilometersPerHourToMilesPerHour(11); // Result: ~6.8351
-
-/**
- * Convert speed from kilometers per hour to meters per second.
- * @param speed - The speed in kilometers per hour.
- * @returns The speed in meters per second.
- */
-kilometersPerHourToMetersPerSecond(11); // Result: ~3.0556
-
-/**
- * Convert speed from miles per hour to kilometers per hour.
- * @param speed - The speed in miles per hour.
- * @returns The speed in kilometers per hour.
- */
-milesPerHourToKilometersPerHour(11); // Result: ~17.7028
-
-/**
- * Convert speed from miles per hour to meters per second.
- * @param speed - The speed in miles per hour.
- * @returns The speed in meters per second.
- */
-milesPerHourToMetersPerSecond(11); // Result: ~4.9174
-```
-
-</details>
-
-### Pace
-
-Running Tools provides a pace to speed converter.
-
-```typescript
-import {
-  minutesPerKilometerToMinutesPerMile,
-  minutesPerMileToMinutesPerKilometer,
-  paceToSpeed,
-} from "../pace";
-```
-
-<details>
-
-```typescript
-/**
- * Convert a pace to speed. See the pace param for unit description.
- * @param pace - The pace to convert (Pace).
- * If the unit of the provided pace is minutes, seconds per mile, the result will be in miles per hour.
- * If the unit of the provided pace is minutes, seconds per kilometer, the result will be in kilometers per hour.
- * @param fractionDigits - Number of digits after the decimal point. Must be in the range 0 - 20, inclusive.
- * @returns The corresponding speed (number) or null if the pace is invalid (if minutes or seconds is less than or equal to 0).
- */
-paceToSpeed({ minutes: 4, seconds: 25 }); // Result: 13.58
-paceToSpeed({ minutes: 4, seconds: 25 }, 1); // Result: 13.6
-
-/**
- * Converts a pace from minutes per kilometer to minutes per mile.
- * @param pace - The pace to convert (Pace).
- * @returns The converted pace in minutes per mile (Pace) or null if the pace is invalid.
- */
-minutesPerKilometerToMinutesPerMile({ minutes: 4, seconds: 15 }); //Result: { minutes: 6, seconds: 50 }
-
-/**
- * Converts a pace from minutes per mile to minutes per kilometer.
- * @param pace - The pace to convert (Pace).
- * @returns The converted pace in minutes per kilometer (Pace) or null if the pace is invalid.
- */
-minutesPerMileToMinutesPerKilometer({ minutes: 5, seconds: 18 }); // Result: { minutes: 3, seconds: 17 })
 ```
 
 </details>
@@ -367,6 +272,168 @@ calculateHeartRateZonesUsingMax(180);
     maxHeartRate: 180,
   },
 ];
+```
+
+</details>
+
+### Pace
+
+Running Tools provides a pace to speed converter.
+
+```typescript
+import {
+  minutesPerKilometerToMinutesPerMile,
+  minutesPerMileToMinutesPerKilometer,
+  paceToSpeed,
+} from "../pace";
+```
+
+<details>
+
+```typescript
+/**
+ * Convert a pace to speed. See the pace param for unit description.
+ * @param pace - The pace to convert (Pace).
+ * If the unit of the provided pace is minutes, seconds per mile, the result will be in miles per hour.
+ * If the unit of the provided pace is minutes, seconds per kilometer, the result will be in kilometers per hour.
+ * @param fractionDigits - Number of digits after the decimal point. Must be in the range 0 - 20, inclusive.
+ * @returns The corresponding speed (number) or null if the pace is invalid (if minutes or seconds is less than or equal to 0).
+ */
+paceToSpeed({ minutes: 4, seconds: 25 }); // Result: 13.58
+paceToSpeed({ minutes: 4, seconds: 25 }, 1); // Result: 13.6
+
+/**
+ * Converts a pace from minutes per kilometer to minutes per mile.
+ * @param pace - The pace to convert (Pace).
+ * @returns The converted pace in minutes per mile (Pace) or null if the pace is invalid.
+ */
+minutesPerKilometerToMinutesPerMile({ minutes: 4, seconds: 15 }); //Result: { minutes: 6, seconds: 50 }
+
+/**
+ * Converts a pace from minutes per mile to minutes per kilometer.
+ * @param pace - The pace to convert (Pace).
+ * @returns The converted pace in minutes per kilometer (Pace) or null if the pace is invalid.
+ */
+minutesPerMileToMinutesPerKilometer({ minutes: 5, seconds: 18 }); // Result: { minutes: 3, seconds: 17 })
+```
+
+</details>
+
+### Speed
+
+Running Tools provides a speed to pace converter and speed converters:
+
+```typescript
+import {
+  convertSpeed,
+  metersPerSecondToKilometersPerHour,
+  metersPerSecondToMilesPerHour,
+  kilometersPerHourToMilesPerHour,
+  kilometersPerHourToMetersPerSecond,
+  milesPerHourToKilometersPerHour,
+  milesPerHourToMetersPerSecond,
+  speedToMetersPerSecond,
+  speedToPace,
+} from "running-tools";
+```
+
+<details>
+
+```typescript
+/**
+ * Convert a speed to pace. See the speed param for unit description.
+ * @param speed - The speed to convert (number).
+ * If the unit of the provided speed is miles per hour, the result will be in minutes, seconds per mile.
+ * If the unit of the provided speed is kilometers per hour, the result will be in minutes, seconds per kilometer.
+ * @returns The corresponding pace (Pace) or null if the speed is less than or equal to 0.
+ */
+speedToPace(11); // Result: {minutes: 5, seconds: 27}
+
+/**
+ * Convert speed from meters per second to kilometers per hour.
+ * @param speed - The speed in meters per second.
+ * @returns The speed in kilometers per hour.
+ */
+metersPerSecondToKilometersPerHour(11); // Result: 39.6
+
+/**
+ * Convert speed from meters per second to miles per hour.
+ * @param speed - The speed in meters per second.
+ * @returns The speed in miles per hour.
+ */
+metersPerSecondToMilesPerHour(11); // Result: ~24.6063
+
+/**
+ * Convert speed from kilometers per hour to miles per hour.
+ * @param speed - The speed in kilometers per hour.
+ * @returns The speed in miles per hour.
+ */
+kilometersPerHourToMilesPerHour(11); // Result: ~6.8351
+
+/**
+ * Convert speed from kilometers per hour to meters per second.
+ * @param speed - The speed in kilometers per hour.
+ * @returns The speed in meters per second.
+ */
+kilometersPerHourToMetersPerSecond(11); // Result: ~3.0556
+
+/**
+ * Convert speed from miles per hour to kilometers per hour.
+ * @param speed - The speed in miles per hour.
+ * @returns The speed in kilometers per hour.
+ */
+milesPerHourToKilometersPerHour(11); // Result: ~17.7028
+
+/**
+ * Convert speed from miles per hour to meters per second.
+ * @param speed - The speed in miles per hour.
+ * @returns The speed in meters per second.
+ */
+milesPerHourToMetersPerSecond(11); // Result: ~4.9174
+
+/**
+ * Converts the given speed to meters per second.
+ * @param speed - The speed value to convert.
+ * @param unit - The unit of the speed value.
+ * @returns The converted speed in meters per second.
+ * @throws Error if the speed unit is unknown.
+ */
+speedToMetersPerSecond(11); // Result: ~4.9174
+
+/**
+ * Converts the given speed to the specified unit.
+ * @param speed - The speed value to convert.
+ * @param unit - The unit of the speed value.
+ * @param toUnit - The unit to convert the speed to.
+ * @returns The converted speed in the specified unit.
+ * @throws Error if the speed unit or the target unit is unknown.
+ */
+convertSpeed(11, "m/s", "kmh"); // Result: 39.6
+```
+
+</details>
+
+### Time
+
+Running Tools provides a function to calculate race time:
+
+```typescript
+import { calculateRaceTime } from "running-tools";
+```
+
+<details>
+
+```typescript
+/**
+ * Calculates the race time based on the given distance and speed.
+ * @param distance - The distance of the race.
+ * @param distanceUnit - The unit of measurement for the distance.
+ * @param speed - The speed at which the race is completed.
+ * @param speedUnit - The unit of measurement for the speed.
+ * @returns An object representing the race time in hours, minutes, and seconds.
+ *          Returns null if either the distance or speed is less than or equal to 0.
+ */
+calculateRaceTime(5, "mi", "mph"); // Result: {hours: 0, minutes: 30, seconds: 0}
 ```
 
 </details>
