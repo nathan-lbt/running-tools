@@ -6,7 +6,8 @@ import {
   SECONDS_IN_HOUR,
   SECONDS_IN_MINUTE,
 } from "../consts";
-import { Pace, SpeedUnit } from "../types";
+import { distanceToMeters } from "../distance";
+import { DistanceUnit, Pace, SpeedUnit, Time } from "../types";
 
 /**
  * Convert a speed to pace.
@@ -129,4 +130,40 @@ export const convertSpeed = (
     default:
       throw new Error(`Unknown speed unit: ${toUnit}`);
   }
+};
+
+/**
+ * Calculates the speed given the distance, distance unit, time, and target speed unit.
+ * @param distance - The distance value (number).
+ * @param distanceUnit - The unit of the distance value (DistanceUnit).
+ * @param time - The time value (Time).
+ * @param toUnit - The target speed unit (SpeedUnit). Defaults to SpeedUnit.MetersPerSecond.
+ * @returns The calculated speed in the specified unit or null if the distance or time is invalid.
+ */
+export const calculateSpeed = (
+  distance: number,
+  distanceUnit: DistanceUnit,
+  time: Time,
+  toUnit: SpeedUnit = SpeedUnit.MetersPerSecond
+): number | null => {
+  const convertedTime =
+    time.hours * SECONDS_IN_HOUR +
+    time.minutes * SECONDS_IN_MINUTE +
+    time.seconds;
+
+  if (convertedTime <= 0 || distance < 0) {
+    return null;
+  }
+  if (distance === 0) {
+    return 0;
+  }
+
+  const convertedDistance = distanceToMeters(distance, distanceUnit);
+  const convertedSpeed = convertSpeed(
+    convertedDistance / convertedTime,
+    SpeedUnit.MetersPerSecond,
+    toUnit
+  );
+
+  return convertedSpeed;
 };

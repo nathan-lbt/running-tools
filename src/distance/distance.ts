@@ -2,8 +2,11 @@ import {
   METERS_IN_KILOMETER,
   METERS_IN_MILE,
   KILOMETERS_IN_MILE,
+  SECONDS_IN_HOUR,
+  SECONDS_IN_MINUTE,
 } from "../consts";
-import { DistanceUnit } from "../types";
+import { speedToMetersPerSecond } from "../speed";
+import { DistanceUnit, SpeedUnit, Time } from "../types";
 
 /**
  * Convert meters to kilometers.
@@ -94,4 +97,40 @@ export const convertDistance = (
     default:
       throw new Error(`Unknown unit: ${unit}`);
   }
+};
+
+/**
+ * Calculate the distance traveled based on time and speed.
+ * @param speed - The speed of travel (number).
+ * @param speedUnit - The unit of the speed (SpeedUnit).
+ * @param time - The time taken to travel (Time).
+ * @param toUnit - The unit to calculate the distance in (DistanceUnit). Defaults to DistanceUnit.Meters.
+ * @returns The calculated distance in the specified unit (number) or null if the speed or time is invalid.
+ */
+export const calculateDistance = (
+  speed: number,
+  speedUnit: SpeedUnit,
+  time: Time,
+  toUnit: DistanceUnit = DistanceUnit.Meters
+): number | null => {
+  const seconds =
+    time.hours * SECONDS_IN_HOUR +
+    time.minutes * SECONDS_IN_MINUTE +
+    time.seconds;
+
+  if (seconds <= 0 || speed < 0) {
+    return null;
+  }
+  if (speed === 0) {
+    return 0;
+  }
+
+  const convertedSpeed = speedToMetersPerSecond(speed, speedUnit);
+  const distance = convertDistance(
+    convertedSpeed * seconds,
+    DistanceUnit.Meters,
+    toUnit
+  );
+
+  return distance;
 };
