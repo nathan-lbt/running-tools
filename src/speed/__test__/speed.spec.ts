@@ -1,5 +1,6 @@
-import { SpeedUnit } from "../../types";
+import { DistanceUnit, SpeedUnit } from "../../types";
 import {
+  calculateSpeed,
   convertSpeed,
   kilometersPerHourToMetersPerSecond,
   kilometersPerHourToMilesPerHour,
@@ -165,6 +166,64 @@ describe("Speed converters", () => {
       expect(() => {
         convertSpeed(11, SpeedUnit.MetersPerSecond, "unsupported" as SpeedUnit);
       }).toThrow();
+    });
+  });
+
+  describe("calculateSpeed", () => {
+    it('calculates speed in "MetersPerSecond" unit', () => {
+      const speed = calculateSpeed(13, DistanceUnit.Kilometers, {
+        hours: 1,
+        minutes: 0,
+        seconds: 0,
+      })?.toFixed(4);
+      expect(Number(speed)).toBe(3.6111);
+    });
+
+    it('calculates speed in "KilometersPerHour" unit', () => {
+      const speed = calculateSpeed(
+        10,
+        DistanceUnit.Kilometers,
+        { hours: 1, minutes: 0, seconds: 0 },
+        SpeedUnit.KilometersPerHour
+      );
+      expect(speed).toBe(10);
+    });
+
+    it('calculates speed in "MilesPerHour" unit', () => {
+      const speed = calculateSpeed(
+        10,
+        DistanceUnit.Kilometers,
+        { hours: 1, minutes: 0, seconds: 0 },
+        SpeedUnit.MilesPerHour
+      )?.toFixed(4);
+      expect(Number(speed)).toBe(6.2137);
+    });
+
+    it("returns null if distance is 0", () => {
+      const speed = calculateSpeed(0, DistanceUnit.Kilometers, {
+        hours: 1,
+        minutes: 0,
+        seconds: 0,
+      });
+      expect(speed).toBe(0);
+    });
+
+    it("returns null if distance is negative", () => {
+      const speed = calculateSpeed(-10, DistanceUnit.Kilometers, {
+        hours: 1,
+        minutes: 0,
+        seconds: 0,
+      });
+      expect(speed).toBe(null);
+    });
+
+    it("returns null if time is 0", () => {
+      const speed = calculateSpeed(10, DistanceUnit.Kilometers, {
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+      });
+      expect(speed).toBe(null);
     });
   });
 });

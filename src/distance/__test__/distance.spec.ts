@@ -3,8 +3,9 @@ import {
   METERS_IN_MILE,
   KILOMETERS_IN_MILE,
 } from "../../consts";
-import { DistanceUnit } from "../../types";
+import { DistanceUnit, SpeedUnit } from "../../types";
 import {
+  calculateDistance,
   convertDistance,
   distanceToMeters,
   kilometersToMeters,
@@ -128,6 +129,59 @@ describe("Distance converters", () => {
       expect(() => {
         convertDistance(1, DistanceUnit.Meters, "unsupported" as DistanceUnit);
       }).toThrow();
+    });
+  });
+
+  describe("calculateDistance", () => {
+    it('calculates distance in "Meters" unit', () => {
+      const distance = calculateDistance(10, SpeedUnit.KilometersPerHour, {
+        hours: 1,
+        minutes: 0,
+        seconds: 0,
+      });
+      expect(distance).toBe(10000);
+    });
+
+    it('calculates distance in "Kilometers" unit', () => {
+      const distance = calculateDistance(
+        10,
+        SpeedUnit.KilometersPerHour,
+        { hours: 1, minutes: 0, seconds: 0 },
+        DistanceUnit.Kilometers
+      );
+      expect(distance).toBe(10);
+    });
+
+    it('calculates distance in "Miles" unit', () => {
+      const distance = calculateDistance(
+        10,
+        SpeedUnit.KilometersPerHour,
+        { hours: 1, minutes: 0, seconds: 0 },
+        DistanceUnit.Miles
+      )?.toFixed(4);
+      expect(Number(distance)).toBe(6.2137);
+    });
+
+    it("returns null if the speed is less than 0", () => {
+      expect(
+        calculateDistance(
+          -10,
+          SpeedUnit.KilometersPerHour,
+          { hours: 1, minutes: 0, seconds: 0 },
+          DistanceUnit.Miles
+        )
+      ).toBe(null);
+    });
+
+    it("returns null if the time is less than or equal to 0", () => {
+      expect(
+        calculateDistance(
+          10,
+          SpeedUnit.KilometersPerHour,
+          { hours: 0, minutes: 0, seconds: 0 },
+          DistanceUnit.Miles
+        )
+      ).toBe(null);
     });
   });
 });

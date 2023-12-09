@@ -23,6 +23,8 @@ Running Tools provides several distance converters:
 
 ```typescript
 import {
+  calculateDistance,
+  convertDistance,
   distanceToMeters,
   metersToKilometers,
   metersToMiles,
@@ -93,6 +95,20 @@ distanceToMeters(1, "km"); // Result: 1000
  * @throws Error if the unit or toUnit is unknown.
  */
 convertDistance(1, "km", "m"); // Result: 1000
+
+/**
+ * Calculate the distance traveled based on time and speed.
+ * @param speed - The speed of travel (number).
+ * @param speedUnit - The unit of the speed (SpeedUnit).
+ * @param time - The time taken to travel (Time).
+ * @param toUnit - The unit to calculate the distance in (DistanceUnit). Defaults to DistanceUnit.Meters.
+ * @returns The calculated distance in the specified unit (number) or null if the speed or time is invalid.
+ */
+calculateDistance(10, "kph", {
+  hours: 1,
+  minutes: 0,
+  seconds: 0,
+}); // Result: 10000
 ```
 
 </details>
@@ -325,6 +341,7 @@ Running Tools provides a speed to pace converter and speed converters:
 
 ```typescript
 import {
+  calculateSpeed,
   convertSpeed,
   metersPerSecondToKilometersPerHour,
   metersPerSecondToMilesPerHour,
@@ -409,6 +426,16 @@ speedToMetersPerSecond(11); // Result: ~4.9174
  * @throws Error if the speed unit or the target unit is unknown.
  */
 convertSpeed(11, "m/s", "kmh"); // Result: 39.6
+
+/**
+ * Calculates the speed given the distance, distance unit, time, and target speed unit.
+ * @param distance - The distance value (number).
+ * @param distanceUnit - The unit of the distance value (DistanceUnit).
+ * @param time - The time value (Time).
+ * @param toUnit - The target speed unit (SpeedUnit). Defaults to SpeedUnit.MetersPerSecond.
+ * @returns The calculated speed in the specified unit or null if the distance or time is invalid.
+ */
+calculateSpeed(10, "km", { hours: 1, minutes: 0, seconds: 0 }, "mph"); // Result: ~6.2137
 ```
 
 </details>

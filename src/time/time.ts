@@ -1,7 +1,7 @@
 import { MINUTES_IN_HOUR, SECONDS_IN_HOUR, SECONDS_IN_MINUTE } from "../consts";
 import { distanceToMeters } from "../distance";
 import { speedToMetersPerSecond } from "../speed";
-import { DistanceUnit, SpeedUnit } from "../types";
+import { DistanceUnit, SpeedUnit, Time } from "../types";
 
 /**
  * Calculates the race time based on the given distance and speed.
@@ -17,7 +17,7 @@ export const calculateRaceTime = (
   distanceUnit: DistanceUnit,
   speed: number,
   speedUnit: SpeedUnit
-): { hours: number; minutes: number; seconds: number } | null => {
+): Time | null => {
   if (distance <= 0 || speed <= 0) {
     return null;
   }
