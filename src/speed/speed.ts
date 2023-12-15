@@ -7,6 +7,7 @@ import {
   SECONDS_IN_MINUTE,
 } from "../consts";
 import { distanceToMeters } from "../distance";
+import { timeToSeconds } from "../time";
 import { DistanceUnit, Pace, SpeedUnit, Time } from "../types";
 
 /**
@@ -146,21 +147,18 @@ export const calculateSpeed = (
   time: Time,
   toUnit: SpeedUnit = SpeedUnit.MetersPerSecond
 ): number | null => {
-  const convertedTime =
-    time.hours * SECONDS_IN_HOUR +
-    time.minutes * SECONDS_IN_MINUTE +
-    time.seconds;
+  const seconds = timeToSeconds(time);
+  const meters = distanceToMeters(distance, distanceUnit);
 
-  if (convertedTime <= 0 || distance < 0) {
+  if (seconds === null || meters < 0) {
     return null;
   }
-  if (distance === 0) {
+  if (meters === 0) {
     return 0;
   }
 
-  const convertedDistance = distanceToMeters(distance, distanceUnit);
   const convertedSpeed = convertSpeed(
-    convertedDistance / convertedTime,
+    meters / seconds,
     SpeedUnit.MetersPerSecond,
     toUnit
   );
