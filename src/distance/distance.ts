@@ -2,10 +2,9 @@ import {
   METERS_IN_KILOMETER,
   METERS_IN_MILE,
   KILOMETERS_IN_MILE,
-  SECONDS_IN_HOUR,
-  SECONDS_IN_MINUTE,
 } from "../consts";
 import { speedToMetersPerSecond } from "../speed";
+import { timeToSeconds } from "../time";
 import { DistanceUnit, SpeedUnit, Time } from "../types";
 
 /**
@@ -113,14 +112,11 @@ export const calculateDistance = (
   time: Time,
   toUnit: DistanceUnit = DistanceUnit.Meters
 ): number | null => {
-  const seconds =
-    time.hours * SECONDS_IN_HOUR +
-    time.minutes * SECONDS_IN_MINUTE +
-    time.seconds;
-
-  if (seconds <= 0 || speed < 0) {
+  const seconds = timeToSeconds(time);
+  if (seconds === null || speed < 0) {
     return null;
   }
+
   if (speed === 0) {
     return 0;
   }

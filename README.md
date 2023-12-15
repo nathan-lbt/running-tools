@@ -445,7 +445,12 @@ calculateSpeed(10, "km", { hours: 1, minutes: 0, seconds: 0 }, "mph"); // Result
 Running Tools provides a function to calculate race time:
 
 ```typescript
-import { calculateRaceTime } from "running-tools";
+import {
+  calculateRaceTime,
+  secondsToTime,
+  timePredictionRiegel,
+  timeToSeconds,
+} from "running-tools";
 ```
 
 <details>
@@ -461,6 +466,45 @@ import { calculateRaceTime } from "running-tools";
  *          Returns null if either the distance or speed is less than or equal to 0.
  */
 calculateRaceTime(5, "mi", "mph"); // Result: {hours: 0, minutes: 30, seconds: 0}
+
+/**
+ * Converts seconds to a Time object.
+ * @param seconds - The time in seconds.
+ * @returns An object representing the time in hours, minutes, and seconds.
+ *          Returns null if the seconds is less than or equal to 0.
+ */
+secondsToTime(1800); // Result: {hours: 0, minutes: 30, seconds: 0}
+
+/**
+ * Predicts the race time for a given distance based on previous achieved time and distance using the Riegel formula.
+ * @param achievedTime - The time achieved for the achieved distance (Time).
+ * @param achievedDistance - The distance already achieved (number).
+ * @param achievedDistanceUnit - The unit of measurement for the achieved distance (DistanceUnit).
+ * @param predictedDistance - The distance for which the race time is predicted (number).
+ * @param predictedDistanceUnit - The unit of measurement for the predicted distance (DistanceUnit). Optional, defaults to the achieved distance unit.
+ * @returns An object representing the predicted race time in hours, minutes, and seconds.
+ *          Returns null if either the achieved distance or predicted distance is less than or equal to 0,
+ *          or if the achieved time is invalid.
+ */
+timePredictionRiegel(
+  { hours: 1, minutes: 4, seconds: 0 },
+  21097.5,
+  "m",
+  42195,
+  "m"
+); // Result: {hours: 2, minutes: 13, seconds: 26}
+
+/**
+ * Converts a Time object to seconds.
+ * @param time - The Time object to convert.
+ * @returns The time in seconds.
+ *          Returns null if the time is less than or equal to 0.
+ */
+timeToSeconds({
+  hours: 2,
+  minutes: 30,
+  seconds: 0,
+}); // Result: 9000
 ```
 
 </details>
