@@ -1,5 +1,6 @@
 import {
   calculateRaceTime,
+  getSplitTimes,
   secondsToTime,
   timePredictionRiegel,
   timeToSeconds,
@@ -201,6 +202,74 @@ describe("Time utils", () => {
       );
 
       expect(predictedTime).toBeNull();
+    });
+  });
+
+  describe("getSplitTimes", () => {
+    it("should return the correct split times", () => {
+      const splitTimes = getSplitTimes(
+        10,
+        SpeedUnit.KilometersPerHour,
+        10000,
+        DistanceUnit.Meters,
+        1000,
+        DistanceUnit.Meters
+      );
+
+      expect(splitTimes).not.toBeNull();
+      expect(splitTimes?.length).toBe(10);
+      expect(splitTimes?.[0].hours).toBe(0);
+      expect(splitTimes?.[0].minutes).toBe(6);
+      expect(splitTimes?.[0].seconds).toBe(0);
+      expect(splitTimes?.[9].hours).toBe(1);
+      expect(splitTimes?.[9].minutes).toBe(0);
+      expect(splitTimes?.[9].seconds).toBe(0);
+    });
+
+    it("should return the correct split times", () => {
+      const splitTimes = getSplitTimes(
+        15,
+        SpeedUnit.KilometersPerHour,
+        5000,
+        DistanceUnit.Meters,
+        2500,
+        DistanceUnit.Meters
+      );
+
+      expect(splitTimes).not.toBeNull();
+      expect(splitTimes?.length).toBe(2);
+      expect(splitTimes?.[0].hours).toBe(0);
+      expect(splitTimes?.[0].minutes).toBe(10);
+      expect(splitTimes?.[0].seconds).toBe(0);
+      expect(splitTimes?.[1].hours).toBe(0);
+      expect(splitTimes?.[1].minutes).toBe(20);
+      expect(splitTimes?.[1].seconds).toBe(0);
+    });
+
+    it("should return null if either the distance, speed, or split distance is less than or equal to 0", () => {
+      const splitTimes = getSplitTimes(
+        10,
+        SpeedUnit.KilometersPerHour,
+        0,
+        DistanceUnit.Meters,
+        1000,
+        DistanceUnit.Meters
+      );
+
+      expect(splitTimes).toBeNull();
+    });
+
+    it("should return null if the split distance is greater than or equal to the total distance", () => {
+      const splitTimes = getSplitTimes(
+        10,
+        SpeedUnit.KilometersPerHour,
+        10000,
+        DistanceUnit.Meters,
+        10000,
+        DistanceUnit.Meters
+      );
+
+      expect(splitTimes).toBeNull();
     });
   });
 });

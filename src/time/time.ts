@@ -129,3 +129,52 @@ export const timePredictionRiegel = (
 
   return secondsToTime(predictedSeconds);
 };
+
+/**
+ * Calculates the split times for a given speed and distance.
+ * @param speed - The speed at which the distance is covered.
+ * @param speedUnit - The unit of measurement for the speed.
+ * @param distance - The total distance to be covered.
+ * @param distanceUnit - The unit of measurement for the distance.
+ * @param splitDistance - The distance at which to calculate the split times.
+ * @param splitDistanceUnit - The unit of measurement for the split distance.
+ * @returns An array of Time objects representing the split times.
+ *          Returns null if either the distance, speed, or split distance is less than or equal to 0,
+ *          or if the split distance is greater than or equal to the total distance.
+ */
+export const getSplitTimes = (
+  speed: number,
+  speedUnit: SpeedUnit,
+  distance: number,
+  distanceUnit: DistanceUnit,
+  splitDistance: number,
+  splitDistanceUnit: DistanceUnit
+): Time[] | null => {
+  if (distance <= 0 || speed <= 0 || splitDistance <= 0) {
+    return null;
+  }
+
+  const convertedDistance = distanceToMeters(distance, distanceUnit);
+  const convertedSplitDistance = distanceToMeters(
+    splitDistance,
+    splitDistanceUnit
+  );
+  if (convertedSplitDistance >= convertedDistance) {
+    return null;
+  }
+
+  const convertedSpeed = speedToMetersPerSecond(speed, speedUnit);
+
+  const splitTimes: Time[] = [];
+
+  let distanceCovered = convertedSplitDistance;
+  while (distanceCovered < convertedDistance) {
+    const time = secondsToTime(distanceCovered / convertedSpeed) as Time;
+    splitTimes.push(time);
+    distanceCovered += convertedSplitDistance;
+  }
+
+  splitTimes.push(secondsToTime(convertedDistance / convertedSpeed) as Time);
+
+  return splitTimes;
+};

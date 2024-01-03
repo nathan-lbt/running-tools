@@ -447,6 +447,7 @@ Running Tools provides a function to calculate race time:
 ```typescript
 import {
   calculateRaceTime,
+  getSplitTimes,
   secondsToTime,
   timePredictionRiegel,
   timeToSeconds,
@@ -466,6 +467,20 @@ import {
  *          Returns null if either the distance or speed is less than or equal to 0.
  */
 calculateRaceTime(5, "mi", "mph"); // Result: {hours: 0, minutes: 30, seconds: 0}
+
+/**
+ * Calculates the split times for a given speed and distance.
+ * @param speed - The speed at which the distance is covered.
+ * @param speedUnit - The unit of measurement for the speed.
+ * @param distance - The total distance to be covered.
+ * @param distanceUnit - The unit of measurement for the distance.
+ * @param splitDistance - The distance at which to calculate the split times.
+ * @param splitDistanceUnit - The unit of measurement for the split distance.
+ * @returns An array of Time objects representing the split times.
+ *          Returns null if either the distance, speed, or split distance is less than or equal to 0,
+ *          or if the split distance is greater than or equal to the total distance.
+ */
+getSplitTimes(15, "kph", 5000, "m", 2500, "m"); // [{hours: 0, minutes: 10, seconds: 0}, {hours: 0, minutes: 20, seconds: 0}]
 
 /**
  * Converts seconds to a Time object.
